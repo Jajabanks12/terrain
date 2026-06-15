@@ -7,12 +7,12 @@ import pandas as pd
 GEOJSON = pathlib.Path(__file__).parent.parent / "data" / "raw" / "counties_geojson.json"
 
 COLORS = {
-    "Plaintiff": "#e74c3c",   # Munich Re risk red
-    "Neutral":   "#8b9ab0",   # Munich Re label grey
+    "Plaintiff": "#e74c3c",   # risk red
+    "Neutral":   "#a8b8cc",   # light blue-grey (readable on white basemap)
     "Defense":   "#165788",   # Munich Re primary blue
 }
-COLOR_FALLBACK = "#4a5568"
-COLOR_GRAY     = "#2d3748"   # out-of-state counties (dark, unobtrusive)
+COLOR_FALLBACK = "#c8d4e0"
+COLOR_GRAY     = "#dde4ec"   # out-of-state counties (light, unobtrusive on white)
 
 # state_abbr -> (center_lat, center_lon, zoom_level, 2-digit fips prefix)
 STATE_INFO: dict[str, tuple[float, float, int, str]] = {
@@ -110,12 +110,13 @@ def build_map(
     # Legend
     legend_html = """
     <div style="position:fixed;bottom:30px;left:30px;z-index:1000;
-                background:#1c2333;border:1px solid #165788;
-                padding:10px 14px;border-radius:6px;box-shadow:2px 2px 8px rgba(0,0,0,.5);
-                font-family:sans-serif;font-size:13px;color:#ffffff;">
+                background:#ffffff;border:1px solid #e8edf2;
+                padding:10px 14px;border-radius:6px;
+                box-shadow:0 2px 8px rgba(22,87,136,0.12);
+                font-family:sans-serif;font-size:13px;color:#1a1a2e;">
       <b style="color:#165788">Venue Rating</b><br>
       <span style="color:#e74c3c">&#9632;</span> Plaintiff<br>
-      <span style="color:#8b9ab0">&#9632;</span> Neutral<br>
+      <span style="color:#a8b8cc">&#9632;</span> Neutral<br>
       <span style="color:#165788">&#9632;</span> Defense
     </div>
     """

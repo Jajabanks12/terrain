@@ -14,39 +14,45 @@ st.set_page_config(
     layout="wide",
 )
 
-# ── Munich Re brand CSS (mirrors streamlit_app.py) ───────────────────────────
+# ── Light theme CSS (mirrors streamlit_app.py) ────────────────────────────────
 st.markdown("""
 <style>
+.stApp { background-color: #ffffff; }
 [data-testid="stSidebar"] {
-    background-color: #0e1117 !important;
-    border-right: 2px solid #165788;
+    background-color: #f8f9fb !important;
+    border-right: 1px solid #e8edf2 !important;
 }
 [data-testid="stSidebar"] h1 { color: #165788 !important; }
 [data-testid="stSidebar"] .stCaption, [data-testid="stSidebar"] small {
-    color: #8b9ab0 !important;
+    color: #6b7a99 !important;
 }
 h1, h2, h3 { color: #165788 !important; }
+hr { border-color: #e8edf2 !important; }
 .about-card {
-    background: #1c2333;
+    background: #ffffff;
+    border: 1px solid #e8edf2;
     border-left: 3px solid #165788;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 16px 20px;
     margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(22,87,136,0.06);
 }
 .about-card h4 { color: #165788; margin: 0 0 6px 0; font-size: 1rem; }
-.about-card p, .about-card li { color: #c8d0db; font-size: 0.9rem; line-height: 1.6; }
+.about-card p, .about-card li { color: #1a1a2e; font-size: 0.9rem; line-height: 1.6; }
 .about-card ul { margin: 6px 0 0 0; padding-left: 18px; }
 .limit-card {
-    background: #1c2333;
+    background: #ffffff;
+    border: 1px solid #e8edf2;
     border-left: 3px solid #e74c3c;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 16px 20px;
     margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(231,76,60,0.06);
 }
 .limit-card h4 { color: #e74c3c; margin: 0 0 6px 0; font-size: 0.95rem; }
-.limit-card p, .limit-card li { color: #c8d0db; font-size: 0.88rem; line-height: 1.6; }
+.limit-card p, .limit-card li { color: #1a1a2e; font-size: 0.88rem; line-height: 1.6; }
 .limit-card ul { margin: 6px 0 0 0; padding-left: 18px; }
-.label { color: #8b9ab0; font-size: 0.78rem; font-weight: 600;
+.label { color: #6b7a99; font-size: 0.78rem; font-weight: 600;
          text-transform: uppercase; letter-spacing: 0.05em; }
 </style>
 """, unsafe_allow_html=True)
@@ -54,7 +60,7 @@ h1, h2, h3 { color: #165788 !important; }
 # ── Header ────────────────────────────────────────────────────────────────────
 st.title("📋 About Terrain")
 st.markdown(
-    "<p style='color:#8b9ab0;font-size:1rem;margin-top:-8px;'>"
+    "<p style='color:#6b7a99;font-size:1rem;margin-top:-8px;'>"
     "Methodology, data sources, refresh cadence, and known limitations.</p>",
     unsafe_allow_html=True,
 )
@@ -198,7 +204,7 @@ st.divider()
 # ── National Benchmarks ───────────────────────────────────────────────────────
 st.subheader("National Benchmark Thresholds")
 st.markdown(
-    "<p style='color:#8b9ab0'>Risk indicators on the county profile page use these thresholds, "
+    "<p style='color:#6b7a99'>Risk indicators on the county profile page use these thresholds, "
     "derived from national averages in the underlying data sources.</p>",
     unsafe_allow_html=True,
 )
@@ -212,8 +218,8 @@ for col, label, green, yellow, red in [
     (b5, "Trucking Firms per 10k",    "< 3",     "3–8",     "> 8"),
 ]:
     col.markdown(
-        f"<div style='background:#1c2333;border-radius:4px;padding:12px;'>"
-        f"<div style='color:#8b9ab0;font-size:0.75rem;font-weight:600;margin-bottom:8px'>{label}</div>"
+        f"<div style='background:#f8f9fb;border:1px solid #e8edf2;border-radius:6px;padding:12px;'>"
+        f"<div style='color:#6b7a99;font-size:0.75rem;font-weight:600;margin-bottom:8px'>{label}</div>"
         f"<div style='color:#2ecc71;font-size:0.82rem;margin-bottom:3px'>🟢 Below Avg: {green}</div>"
         f"<div style='color:#f39c12;font-size:0.82rem;margin-bottom:3px'>🟡 Avg: {yellow}</div>"
         f"<div style='color:#e74c3c;font-size:0.82rem'>🔴 Elevated: {red}</div>"
@@ -309,7 +315,7 @@ st.divider()
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown(
-    "<p style='color:#8b9ab0;font-size:0.8rem;'>"
+    "<p style='color:#6b7a99;font-size:0.8rem;'>"
     "Terrain is an internal underwriting reference tool. Data is provided as-is from public sources. "
     "It does not constitute legal advice or a binding risk assessment. "
     "All underwriting decisions remain with the underwriter of record.<br><br>"

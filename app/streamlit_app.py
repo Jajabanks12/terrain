@@ -26,32 +26,36 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+/* ── Base ────────────────────────────────────────────────────────────────── */
+.stApp { background-color: #ffffff; }
+
 /* ── Sidebar ─────────────────────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
-    background-color: #0e1117 !important;
-    border-right: 2px solid #165788;
+    background-color: #f8f9fb !important;
+    border-right: 1px solid #e8edf2 !important;
 }
 [data-testid="stSidebar"] h1 {
     color: #165788 !important;
 }
 [data-testid="stSidebar"] .stCaption,
 [data-testid="stSidebar"] small {
-    color: #8b9ab0 !important;
+    color: #6b7a99 !important;
 }
 
 /* ── Dropdown selectors ──────────────────────────────────────────────────── */
 [data-testid="stSelectbox"] > div > div {
-    border-color: #165788 !important;
-    background-color: #1c2333 !important;
-    color: #ffffff !important;
+    border-color: #e8edf2 !important;
+    background-color: #ffffff !important;
+    color: #1a1a2e !important;
 }
 [data-testid="stSelectbox"] > div > div:focus-within {
-    box-shadow: 0 0 0 2px #165788 !important;
+    border-color: #165788 !important;
+    box-shadow: 0 0 0 2px rgba(22,87,136,0.15) !important;
 }
 
 /* ── Section expander headers ────────────────────────────────────────────── */
 [data-testid="stExpander"] > details > summary {
-    background-color: #1c2333 !important;
+    background-color: #f8f9fb !important;
     border-left: 3px solid #165788 !important;
     border-radius: 4px !important;
     padding: 8px 12px !important;
@@ -59,25 +63,31 @@ st.markdown("""
     font-weight: 600 !important;
 }
 [data-testid="stExpander"] > details > summary:hover {
-    background-color: #243047 !important;
+    background-color: #eef2f7 !important;
 }
 [data-testid="stExpander"] > details {
-    border: 1px solid #1c2333 !important;
+    border: 1px solid #e8edf2 !important;
     border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(22,87,136,0.06) !important;
 }
 
 /* ── Metric labels and values ────────────────────────────────────────────── */
 [data-testid="stMetricLabel"] p {
-    color: #8b9ab0 !important;
+    color: #6b7a99 !important;
     font-size: 0.8rem !important;
 }
 [data-testid="stMetricValue"] {
-    color: #ffffff !important;
+    color: #1a1a2e !important;
 }
 
-/* ── Subheader text ──────────────────────────────────────────────────────── */
-h2, h3 {
+/* ── Headers ─────────────────────────────────────────────────────────────── */
+h1, h2, h3 {
     color: #165788 !important;
+}
+
+/* ── Dividers ────────────────────────────────────────────────────────────── */
+hr {
+    border-color: #e8edf2 !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -85,13 +95,16 @@ h2, h3 {
 # ── Munich Re brand palette ───────────────────────────────────────────────────
 MR_BLUE       = "#165788"
 MR_BLUE2      = "#00538a"
-MR_PANEL      = "#1c2333"
-MR_LABEL      = "#8b9ab0"
+MR_PANEL      = "#ffffff"
+MR_LABEL      = "#6b7a99"
+MR_TEXT       = "#1a1a2e"
+MR_BORDER     = "#e8edf2"
+MR_BG_LIGHT   = "#f8f9fb"
 MR_GREEN      = "#2ecc71"
 MR_AMBER      = "#f39c12"
 MR_RED        = "#e74c3c"
 
-RATING_COLORS = {"Plaintiff": MR_RED,   "Neutral": MR_LABEL, "Defense": MR_BLUE}
+RATING_COLORS = {"Plaintiff": MR_RED, "Neutral": "#a8b8cc", "Defense": MR_BLUE}
 RATING_EMOJI  = {"Plaintiff": "🔴", "Neutral": "⚪", "Defense": "🔵"}
 
 STATE_NAMES = {
@@ -151,8 +164,8 @@ def glossary_expander(section_key: str) -> None:
     with st.expander("ℹ️ What do these mean?"):
         for term, definition in terms:
             st.markdown(
-                f"<span style='color:#ffffff;font-weight:600'>{term}</span>"
-                f"<span style='color:#8b9ab0'> — {definition}</span>",
+                f"<span style='color:#1a1a2e;font-weight:600'>{term}</span>"
+                f"<span style='color:#6b7a99'> — {definition}</span>",
                 unsafe_allow_html=True,
             )
 
@@ -186,13 +199,13 @@ def _badge(color: str, label: str) -> str:
 def risk_metric(col, label: str, val, low: float, high: float, suffix: str = "") -> None:
     """Renders a branded metric card with inline risk badge into the given column."""
     if val is None or (isinstance(val, float) and pd.isna(val)):
-        val_html = "<span style='color:#8b9ab0'>—</span>"
+        val_html = "<span style='color:#6b7a99'>—</span>"
     else:
         color, tag_label = _risk_level(val, low, high)
-        val_html = f"<span style='color:#fff;font-size:1.35rem;font-weight:600'>{val:,.1f}{suffix}</span>{_badge(color, tag_label)}"
+        val_html = f"<span style='color:#1a1a2e;font-size:1.35rem;font-weight:600'>{val:,.1f}{suffix}</span>{_badge(color, tag_label)}"
     col.markdown(
         f"<div style='padding:4px 0 8px 0'>"
-        f"<div style='color:#8b9ab0;font-size:0.78rem;font-weight:500;margin-bottom:3px'>{label}</div>"
+        f"<div style='color:#6b7a99;font-size:0.78rem;font-weight:500;margin-bottom:3px'>{label}</div>"
         f"<div>{val_html}</div></div>",
         unsafe_allow_html=True,
     )
@@ -238,7 +251,7 @@ with st.sidebar:
     st.divider()
     st.caption("Data sources: Harmonie • Census ACS • NHTSA FARS • CDC PLACES • CBP • LegiScan")
     st.markdown(
-        "<p style='color:#8b9ab0;font-size:0.72rem;margin-top:8px;'>Powered by Munich Re Specialty</p>",
+        "<p style='color:#6b7a99;font-size:0.72rem;margin-top:8px;'>Powered by Munich Re Specialty</p>",
         unsafe_allow_html=True,
     )
 
@@ -298,17 +311,23 @@ with col_card:
 
         st.markdown(
             f"""
-            <div style="background:{color}22;border-left:5px solid {color};
-                        padding:12px 16px;border-radius:4px;margin-bottom:8px;">
-              <span style="font-size:1.4rem;font-weight:700;">{emoji} {sel_county} County, {sel_state}</span><br>
-              <span style="font-size:1.1rem;color:{color};font-weight:600;">
-                {rating} Venue
-              </span>
-              &nbsp;·&nbsp;<span style="color:#666;font-size:.9rem;">FIPS {detail.get('fips','')}</span><br>
-              <span style="color:#888;font-size:.82rem;">{breakdown_line}</span>
+            <div style="background:#ffffff;border-left:5px solid {color};
+                        border:1px solid #e8edf2;border-left:5px solid {color};
+                        padding:14px 18px;border-radius:6px;margin-bottom:8px;
+                        box-shadow:0 2px 8px rgba(22,87,136,0.08);">
+              <div style="font-size:1.35rem;font-weight:700;color:#1a1a2e;">
+                {sel_county} County, {sel_state}
+              </div>
+              <div style="margin-top:4px;">
+                <span style="display:inline-block;background:{color};color:#fff;
+                             font-size:0.8rem;font-weight:700;padding:3px 10px;
+                             border-radius:12px;">{rating} Venue</span>
+                &nbsp;<span style="color:#6b7a99;font-size:.85rem;">FIPS {detail.get('fips','')}</span>
+              </div>
+              <div style="color:#6b7a99;font-size:.8rem;margin-top:6px;">{breakdown_line}</div>
             </div>
             <div style="display:inline-block;background:{badge_bg};color:{badge_color};
-                        padding:4px 10px;border-radius:4px;font-size:.82rem;
+                        padding:4px 12px;border-radius:12px;font-size:.82rem;
                         font-weight:600;margin-bottom:12px;">
               {badge_text}
             </div>
@@ -379,17 +398,17 @@ with col_card:
             if bar_sup:
                 c1.markdown(
                     "<div style='padding:4px 0 8px 0'>"
-                    "<div style='color:#8b9ab0;font-size:0.78rem;font-weight:500;margin-bottom:3px'>Bars / Drinking Places</div>"
-                    "<div style='color:#8b9ab0;font-size:1rem;font-style:italic'>suppressed</div></div>",
+                    "<div style='color:#6b7a99;font-size:0.78rem;font-weight:500;margin-bottom:3px'>Bars / Drinking Places</div>"
+                    "<div style='color:#6b7a99;font-size:1rem;font-style:italic'>suppressed</div></div>",
                     unsafe_allow_html=True,
                 )
             elif bars_rate is not None:
                 bc, bl = _risk_level(bars_rate, 8, 15)
                 c1.markdown(
                     f"<div style='padding:4px 0 8px 0'>"
-                    f"<div style='color:#8b9ab0;font-size:0.78rem;font-weight:500;margin-bottom:3px'>Bars / Drinking Places</div>"
-                    f"<div style='color:#fff;font-size:1.35rem;font-weight:600'>{fmt(bars, decimals=0)}"
-                    f"<span style='color:#8b9ab0;font-size:0.8rem;font-weight:400'> estab</span>"
+                    f"<div style='color:#6b7a99;font-size:0.78rem;font-weight:500;margin-bottom:3px'>Bars / Drinking Places</div>"
+                    f"<div style='color:#1a1a2e;font-size:1.35rem;font-weight:600'>{fmt(bars, decimals=0)}"
+                    f"<span style='color:#6b7a99;font-size:0.8rem;font-weight:400'> estab</span>"
                     f"{_badge(bc, f'{bars_rate:.1f}/10k · {bl}')}</div></div>",
                     unsafe_allow_html=True,
                 )
@@ -402,9 +421,9 @@ with col_card:
                 tc, tl = _risk_level(trucks_rate, 3, 8)
                 c3.markdown(
                     f"<div style='padding:4px 0 8px 0'>"
-                    f"<div style='color:#8b9ab0;font-size:0.78rem;font-weight:500;margin-bottom:3px'>Trucking Firms</div>"
-                    f"<div style='color:#fff;font-size:1.35rem;font-weight:600'>{fmt(trucks, decimals=0)}"
-                    f"<span style='color:#8b9ab0;font-size:0.8rem;font-weight:400'> firms</span>"
+                    f"<div style='color:#6b7a99;font-size:0.78rem;font-weight:500;margin-bottom:3px'>Trucking Firms</div>"
+                    f"<div style='color:#1a1a2e;font-size:1.35rem;font-weight:600'>{fmt(trucks, decimals=0)}"
+                    f"<span style='color:#6b7a99;font-size:0.8rem;font-weight:400'> firms</span>"
                     f"{_badge(tc, f'{trucks_rate:.1f}/10k · {tl}')}</div></div>",
                     unsafe_allow_html=True,
                 )
@@ -434,19 +453,20 @@ with news_col:
         st.caption("No recent headlines found. Try selecting a different state.")
     else:
         for item in headlines:
-            source_str = f" &nbsp;·&nbsp; <span style='color:#8b9ab0'>{item['source']}</span>" if item["source"] else ""
-            date_str   = f" &nbsp;·&nbsp; <span style='color:#8b9ab0;font-size:.8rem'>{item['date']}</span>" if item["date"] else ""
+            source_str = f" &nbsp;·&nbsp; <span style='color:#6b7a99'>{item['source']}</span>" if item["source"] else ""
+            date_str   = f" &nbsp;·&nbsp; <span style='color:#6b7a99;font-size:.8rem'>{item['date']}</span>" if item["date"] else ""
             st.markdown(
-                f"<div style='padding:6px 0;border-bottom:1px solid #1c2333;'>"
+                f"<div style='padding:8px 0 8px 12px;border-left:3px solid #165788;"
+                f"border-bottom:1px solid #e8edf2;margin-bottom:4px;'>"
                 f"<a href='{item['link']}' target='_blank' "
-                f"style='color:#ffffff;font-size:.9rem;font-weight:500;text-decoration:none;'>"
+                f"style='color:#1a1a2e;font-size:.9rem;font-weight:500;text-decoration:none;'>"
                 f"{item['title']}</a><br>"
                 f"<span style='font-size:.78rem'>{source_str}{date_str}</span>"
                 f"</div>",
                 unsafe_allow_html=True,
             )
         st.markdown(
-            "<p style='color:#8b9ab0;font-size:.72rem;margin-top:8px;'>"
+            "<p style='color:#6b7a99;font-size:.72rem;margin-top:8px;'>"
             "Results from Google News RSS. Keyword-based — expect occasional irrelevant articles. "
             "Cached for 5 minutes.</p>",
             unsafe_allow_html=True,
@@ -472,8 +492,8 @@ with legi_col:
             with st.container():
                 st.markdown(
                     f"{badge} **{row['bill_number']}** &nbsp;·&nbsp; "
-                    f"<span style='color:#8b9ab0'>{row['status']}</span> &nbsp;·&nbsp; "
-                    f"<span style='color:#8b9ab0;font-size:.85rem'>{row['last_action_date']}</span>",
+                    f"<span style='color:#6b7a99'>{row['status']}</span> &nbsp;·&nbsp; "
+                    f"<span style='color:#6b7a99;font-size:.85rem'>{row['last_action_date']}</span>",
                     unsafe_allow_html=True,
                 )
                 st.caption(row["title"])
