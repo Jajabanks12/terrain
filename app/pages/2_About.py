@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# ── Munich Re brand CSS (mirrors main.py) ─────────────────────────────────────
+# ── Munich Re brand CSS (mirrors streamlit_app.py) ───────────────────────────
 st.markdown("""
 <style>
 [data-testid="stSidebar"] {

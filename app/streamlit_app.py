@@ -1,6 +1,6 @@
 """
 Terrain — E&S Casualty County Risk Reference
-Run: streamlit run app/main.py
+Run: streamlit run app/streamlit_app.py
 """
 
 import sys, pathlib
