@@ -1,0 +1,9 @@
+streamlit
+pandas
+folium
+streamlit-folium
+feedparser
+requests
+python-dotenv
+openpyxl
+plotly
